@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>تحليل المعادن (Electrolytes)</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            direction: rtl;
+            background-color: #f0f8ff;
+            margin: 20px;
+        }
+        
+        h2 {
+            color: #333;
+        }
+        
+        label {
+            display: inline-block;
+            width: 180px;
+            margin-bottom: 8px;
+        }
+        
+        input {
+            width: 150px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+        
+        .good {
+            color: green;
+            font-weight: bold;
+        }
+        
+        .bad {
+            color: red;
+            font-weight: bold;
+        }
+        
+        #result {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>أدخل نتائج تحاليلك</h2>
+
+    <label for="na">الصوديوم Na (mmol/L)</label>
+    <input type="number" id="na" step="0.1" /><br />
+
+    <label for="k">البوتاسيوم K (mmol/L)</label>
+    <input type="number" id="k" step="0.1" /><br />
+
+    <label for="cl">الكلور Cl (mmol/L)</label>
+    <input type="number" id="cl" step="0.1" /><br />
+
+    <label for="ca">الكالسيوم Ca (mg/dL)</label>
+    <input type="number" id="ca" step="0.1" /><br />
+
+    <label for="mg">المغنيسيوم Mg (mg/dL)</label>
+    <input type="number" id="mg" step="0.1" /><br />
+
+    <label for="po4">الفوسفور PO₄ (mg/dL)</label>
+    <input type="number" id="po4" step="0.1" /><br />
+
+    <label for="hco3">البيكربونات HCO₃ (mEq/L)</label>
+    <input type="number" id="hco3" step="0.1" /><br />
+
+    <label for="urea">اليوريا Urea (mg/dL)</label>
+    <input type="number" id="urea" step="0.1" /><br />
+
+    <button onclick="checkValues()">تحقق من النتائج</button>
+
+    <div id="result"></div>
+
+    <script>
+        function checkValues() {
+            let result = "";
+
+            const tests = [{
+                name: "الصوديوم Na",
+                val: parseFloat(document.getElementById("na").value),
+                min: 135,
+                max: 145,
+                unit: "mmol/L"
+            }, {
+                name: "البوتاسيوم K",
+                val: parseFloat(document.getElementById("k").value),
+                min: 3.5,
+                max: 5.0,
+                unit: "mmol/L"
+            }, {
+                name: "الكلور Cl",
+                val: parseFloat(document.getElementById("cl").value),
+                min: 98,
+                max: 106,
+                unit: "mmol/L"
+            }, {
+                name: "الكالسيوم Ca",
+                val: parseFloat(document.getElementById("ca").value),
+                min: 8.5,
+                max: 10.5,
+                unit: "mg/dL"
+            }, {
+                name: "المغنيسيوم Mg",
+                val: parseFloat(document.getElementById("mg").value),
+                min: 1.7,
+                max: 2.2,
+                unit: "mg/dL"
+            }, {
+                name: "الفوسفور PO₄",
+                val: parseFloat(document.getElementById("po4").value),
+                min: 2.5,
+                max: 4.5,
+                unit: "mg/dL"
+            }, {
+                name: "البيكربونات HCO₃",
+                val: parseFloat(document.getElementById("hco3").value),
+                min: 22,
+                max: 28,
+                unit: "mEq/L"
+            }, {
+                name: "اليوريا Urea",
+                val: parseFloat(document.getElementById("urea").value),
+                min: 15,
+                max: 45,
+                unit: "mg/dL"
+            }];
+
+            tests.forEach((test) => {
+                if (isNaN(test.val)) {
+                    result += `${test.name}: لم تدخل قيمة<br>`;
+                } else if (test.val >= test.min && test.val <= test.max) {
+                    result += `<span class="good">${test.name}: ${test.val} ${test.unit} ✅ طبيعي</span><br>`;
+                } else {
+                    result += `<span class="bad">${test.name}: ${test.val} ${test.unit} ❌ خارج الطبيعي</span><br>`;
+                }
+            });
+
+            document.getElementById("result").innerHTML = result;
+        }
+    </script>
+</body>
+
+</html>
